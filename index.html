@@ -1118,15 +1118,15 @@
                     console.warn("Logo tidak ditemukan atau gagal dimuat, lanjut tanpa logo.", err);
                 }
 
-                sheet.getCell('B1').value = 'DAFTAR HADIR';
-                sheet.getCell('B2').value = data.purpose.toUpperCase();
-                sheet.getCell('B3').value = 'FAKULTAS ILMU SOSIAL DAN ILMU POLITIK UNIVERSITAS AIRLANGGA';
-                sheet.getCell('B4').value = fullDateText;
-                sheet.getCell('B5').value = data.roomName.toUpperCase();
+                sheet.getCell('C1').value = 'DAFTAR HADIR';
+                sheet.getCell('C2').value = data.purpose.toUpperCase();
+                sheet.getCell('C3').value = 'FAKULTAS ILMU SOSIAL DAN ILMU POLITIK UNIVERSITAS AIRLANGGA';
+                sheet.getCell('C4').value = fullDateText;
+                sheet.getCell('C5').value = data.roomName.toUpperCase();
 
                 for(let i = 1; i <= 5; i++) {
-                    sheet.mergeCells(`B${i}:D${i}`);
-                    const cell = sheet.getCell(`A${i}`);
+                    sheet.mergeCells(`C${i}:D${i}`);
+                    const cell = sheet.getCell(`C${i}`);
                     cell.font = { bold: true, size: 10, name: 'Arial' };
                     cell.alignment = { vertical: 'middle', horizontal: 'center' };
                     // Beri sedikit tinggi ekstra pada baris judul agar logo tidak terlalu menabrak tabel
@@ -1139,8 +1139,8 @@
                 
                 sheet.getColumn('A').width = 6; 
                 sheet.getColumn('B').width = 40; 
-                sheet.getColumn('C').width = 15; 
-                sheet.getColumn('D').width = 15;   
+                sheet.getColumn('C').width = 16; 
+                sheet.getColumn('D').width = 16;   
 
                 for (let i = 1; i <= totalRows; i++) {
                     const row = sheet.getRow(7 + i); row.height = 30; row.font = { name: 'Arial' };
