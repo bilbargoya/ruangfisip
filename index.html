@@ -1125,9 +1125,9 @@
                 sheet.getCell('B5').value = data.roomName.toUpperCase();
 
                 for(let i = 1; i <= 5; i++) {
-                    sheet.mergeCells(`B${i}:E${i}`);
+                    sheet.mergeCells(`B${i}:D${i}`);
                     const cell = sheet.getCell(`B${i}`);
-                    cell.font = { bold: true, size: 10, name: 'Arial' };
+                    cell.font = { bold: true, size: 9, name: 'Arial' };
                     cell.alignment = { vertical: 'middle', horizontal: 'center' };
                     // Beri sedikit tinggi ekstra pada baris judul agar logo tidak terlalu menabrak tabel
                     sheet.getRow(i).height = 16; 
