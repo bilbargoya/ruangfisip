@@ -398,8 +398,16 @@
                         <p class="text-xs text-fisip-navy font-semibold uppercase tracking-wider mb-1">Status</p>
                         <div id="detail-status"></div>
                     </div>
+                    
+                    <!-- TAMBAHKAN BAGIAN TOMBOL DOWNLOAD INI -->
+                    <div class="border-t border-slate-200 pt-3 mt-3">
+                        <button type="button" onclick="window.downloadDaftarHadir()" class="w-full bg-[#107c41] hover:bg-[#0c5e31] text-white font-bold py-2.5 rounded-lg transition flex items-center justify-center shadow-sm text-sm">
+                            <i class="fa-solid fa-file-excel text-lg me-2"></i> Unduh Daftar Hadir (Excel)
+                        </button>
+                    </div>
+                    <!-- AKHIR TAMBAHAN -->
+                    
                 </div>
-
                 <div class="bg-slate-100 border border-slate-300 rounded-lg p-4 mt-3" id="operator-action-section">
                     <p class="text-xs text-slate-700 font-bold uppercase tracking-wider mb-2"><i class="fa-solid fa-shield-halved me-1"></i>Aksi Akses Cepat</p>
                     
@@ -899,6 +907,12 @@
             currentTargetRoom = room;
             currentTargetPicWa = picWa;
 
+            // TAMBAHKAN BARIS INI UNTUK MENYIAPKAN DATA EXCEL
+            currentBookingData = {
+                token: token, roomName: room, dateStr: dateStr, 
+                startHour: startHour, duration: duration, name: name, purpose: purpose, pengunjung: pengunjung
+            };
+
             document.getElementById('detail-room').innerText = room;
             document.getElementById('detail-date').innerText = new Date(dateStr).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
             
@@ -1056,10 +1070,12 @@
         }
 
 		window.downloadDaftarHadir = async function() {
-            const btn = document.querySelector('button[onclick="window.downloadDaftarHadir()"]');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-xl me-2"></i> Membuat Excel...';
-            btn.disabled = true;
+            const btns = document.querySelectorAll('button[onclick="window.downloadDaftarHadir()"]');
+            const originalTexts = Array.from(btns).map(b => b.innerHTML);
+            btns.forEach(btn => {
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-xl me-2"></i> Membuat Excel...';
+                btn.disabled = true;
+            });
 
             try {
                 const data = currentBookingData;
@@ -1102,19 +1118,19 @@
                     console.warn("Logo tidak ditemukan atau gagal dimuat, lanjut tanpa logo.", err);
                 }
 
-                sheet.getCell('A1').value = 'DAFTAR HADIR';
-                sheet.getCell('A2').value = data.purpose.toUpperCase();
-                sheet.getCell('A3').value = 'FAKULTAS ILMU SOSIAL DAN ILMU POLITIK UNIVERSITAS AIRLANGGA';
-                sheet.getCell('A4').value = fullDateText;
-                sheet.getCell('A5').value = data.roomName.toUpperCase();
+                sheet.getCell('B1').value = 'DAFTAR HADIR';
+                sheet.getCell('B2').value = data.purpose.toUpperCase();
+                sheet.getCell('B3').value = 'FAKULTAS ILMU SOSIAL DAN ILMU POLITIK UNIVERSITAS AIRLANGGA';
+                sheet.getCell('B4').value = fullDateText;
+                sheet.getCell('B5').value = data.roomName.toUpperCase();
 
                 for(let i = 1; i <= 5; i++) {
-                    sheet.mergeCells(`A${i}:D${i}`);
+                    sheet.mergeCells(`B${i}:D${i}`);
                     const cell = sheet.getCell(`A${i}`);
-                    cell.font = { bold: true, size: 12, name: 'Arial' };
+                    cell.font = { bold: true, size: 10, name: 'Arial' };
                     cell.alignment = { vertical: 'middle', horizontal: 'center' };
                     // Beri sedikit tinggi ekstra pada baris judul agar logo tidak terlalu menabrak tabel
-                    sheet.getRow(i).height = 18; 
+                    sheet.getRow(i).height = 16; 
                 }
 
                 sheet.getCell('A7').value = 'NO.'; sheet.getCell('B7').value = 'NAMA'; sheet.getCell('C7').value = 'TANDA TANGAN';
@@ -1149,7 +1165,10 @@
                 alert("Terjadi kesalahan saat membuat Excel.");
                 console.error(error);
             } finally {
-                btn.innerHTML = originalText; btn.disabled = false;
+                btns.forEach((btn, i) => {
+                    btn.innerHTML = originalTexts[i]; 
+                    btn.disabled = false;
+                });
             }
         }
         
