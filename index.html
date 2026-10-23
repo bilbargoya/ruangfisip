@@ -1111,7 +1111,7 @@
                         // Letakkan logo di pojok kiri atas (mengapung di atas sel)
                         sheet.addImage(logoId, {
                             tl: { col: 0.2, row: 0.2 }, // Offset sedikit dari tepi sel A1
-                            ext: { width: 75, height: 75 } // Ukuran logo proporsional
+                            ext: { width: 55, height: 55 } // Ukuran logo proporsional
                         });
                     }
                 } catch (err) {
@@ -1139,8 +1139,8 @@
                 
                 sheet.getColumn('A').width = 10; 
                 sheet.getColumn('B').width = 40; 
-                sheet.getColumn('C').width = 18; 
-                sheet.getColumn('D').width = 18;   
+                sheet.getColumn('C').width = 20; 
+                sheet.getColumn('D').width = 20;   
 
                 for (let i = 1; i <= totalRows; i++) {
                     const row = sheet.getRow(7 + i); row.height = 30; row.font = { name: 'Arial' };
