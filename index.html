@@ -1125,7 +1125,7 @@
                 sheet.getCell('C5').value = data.roomName.toUpperCase();
 
                 for(let i = 1; i <= 5; i++) {
-                    sheet.mergeCells(`C${i}:D${i}`);
+                    sheet.mergeCells(`C${i}:E${i}`);
                     const cell = sheet.getCell(`C${i}`);
                     cell.font = { bold: true, size: 10, name: 'Arial' };
                     cell.alignment = { vertical: 'middle', horizontal: 'center' };
@@ -1137,10 +1137,10 @@
                 sheet.mergeCells('C7:D7');
                 const th = sheet.getRow(7); th.font = { bold: true, name: 'Arial' }; th.alignment = { vertical: 'middle', horizontal: 'center' }; th.height = 25; 
                 
-                sheet.getColumn('A').width = 6; 
+                sheet.getColumn('A').width = 10; 
                 sheet.getColumn('B').width = 40; 
-                sheet.getColumn('C').width = 16; 
-                sheet.getColumn('D').width = 16;   
+                sheet.getColumn('C').width = 17; 
+                sheet.getColumn('D').width = 17;   
 
                 for (let i = 1; i <= totalRows; i++) {
                     const row = sheet.getRow(7 + i); row.height = 30; row.font = { name: 'Arial' };
